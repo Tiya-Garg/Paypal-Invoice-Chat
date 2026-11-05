@@ -40,3 +40,4 @@ When rotating secrets:
 3. `PAYPAL_WEBHOOK_ID`:
    - Run `npx tsx scripts/register-webhook.ts <NEW_HTTPS_URL>`.
    - Update `PAYPAL_WEBHOOK_ID` with the printed ID.
+

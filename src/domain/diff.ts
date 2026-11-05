@@ -39,8 +39,14 @@ export function computeInvoiceDiff(vFrom: Invoice, vTo: Invoice): InvoiceDiff {
     }
   }
 
-  const taxChanged = JSON.stringify(vFrom.tax) !== JSON.stringify(vTo.tax);
-  const discountChanged = JSON.stringify(vFrom.discount) !== JSON.stringify(vTo.discount);
+  const taxChanged =
+    (vFrom.tax?.name !== vTo.tax?.name) ||
+    (vFrom.tax?.percentBps !== vTo.tax?.percentBps);
+
+  const discountChanged =
+    vFrom.discount?.kind !== vTo.discount?.kind ||
+    (vFrom.discount?.kind === 'percent' && vTo.discount?.kind === 'percent' && vFrom.discount.percentBps !== vTo.discount.percentBps) ||
+    (vFrom.discount?.kind === 'amount' && vTo.discount?.kind === 'amount' && vFrom.discount.amountMinor !== vTo.discount.amountMinor);
 
   return {
     versionFrom: vFrom.version,

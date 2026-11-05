@@ -4,19 +4,12 @@ import { parseLocaleAmount } from './localeAmount.js';
 /**
  * Deterministic regex fallback parser for common invoice edits:
  * Runs when Anthropic API times out (>8s) or is unavailable.
- *
- * Supported patterns:
- * - "add 3k for installation service"
- * - "add Material A for 5000"
- * - "remove Material A"
- * - "change Material A to 5.5k"
- * - "18% GST" or "add 18% GST"
  */
 export function regexFallbackParser(text: string, defaultCurrency = 'USD'): DomainOp[] {
-  const clean = text
-    .replace(/^@paypal[,:]?\s*/i, '')
-    .replace(/^hey\s+paypal[,:]?\s*/i, '')
-    .trim();
+  let clean = text.trim();
+  clean = clean.replace(/^[,\s]*@paypal[,:\s]*/i, '');
+  clean = clean.replace(/^[,\s]*hey\s+paypal[,:\s]*/i, '');
+  clean = clean.replace(/[!.]+$/, '').trim();
 
   const ops: DomainOp[] = [];
 
@@ -71,4 +64,3 @@ export function regexFallbackParser(text: string, defaultCurrency = 'USD'): Doma
 
   return ops;
 }
-

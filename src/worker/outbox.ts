@@ -2,7 +2,7 @@ import { childLogger } from '../config/logger.js';
 import type { Invoice, InvoiceStatus } from '../domain/types.js';
 import { calculateInvoiceTotals } from '../domain/calculator.js';
 import { toPayPalDecimal } from '../domain/money.js';
-import { defaultPayPalClient, type PayPalClient } from './client.js';
+import { defaultPayPalClient, type PayPalClient } from '../paypal/client.js';
 
 const log = childLogger('outbox-worker');
 

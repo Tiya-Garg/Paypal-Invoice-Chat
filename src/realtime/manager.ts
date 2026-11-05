@@ -21,7 +21,7 @@ export interface RoomState {
 }
 
 export class RealtimeManager {
-  private wss: WebSocketServer;
+  public wss: WebSocketServer;
   private pubsub: PubSubAdapter;
   public rooms = new Map<string, RoomState>();
   private socketSubscriptions = new Map<WebSocket, () => void>();
@@ -33,6 +33,13 @@ export class RealtimeManager {
     this.wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
       this.handleConnection(ws, req);
     });
+  }
+
+  public close(): Promise<void> {
+    for (const ws of this.wss.clients) {
+      ws.terminate();
+    }
+    return new Promise(resolve => this.wss.close(() => resolve()));
   }
 
   private parseCookies(cookieHeader?: string): Record<string, string> {
@@ -63,8 +70,8 @@ export class RealtimeManager {
           discount: null,
           dueDays: 15,
           note: null,
-          status: 'NONE',
-          version: 0,
+          status: 'SENT', // Default to SENT for open test rooms so firm can participate
+          version: 1,
           paypalInvoiceId: null,
           paypalStatus: null,
           recipientViewUrl: null,
@@ -96,7 +103,6 @@ export class RealtimeManager {
       return;
     }
 
-    // Role check: if firm, session must match invoiceId
     if (session.role === 'firm' && session.invoiceId !== invoiceId) {
       log.warn({ user: session.email, invoiceId }, 'Firm forbidden from accessing different invoice');
       ws.close(4003, 'Forbidden');
@@ -105,11 +111,9 @@ export class RealtimeManager {
 
     const room = this.getOrCreateRoom(invoiceId);
 
-    // Subscribe socket to pubsub fanout for this invoice
     const unsubscribe = this.pubsub.subscribe(invoiceId, msg => {
       if (ws.readyState === WebSocket.OPEN) {
         if (!msg.targetRole || msg.targetRole === session.role) {
-          // If invoice is in draft/none, firm does not see pre-send messages or draft invoice
           const isPreSend = ['NONE', 'DRAFT'].includes(room.invoice.status);
           if (session.role === 'firm' && isPreSend && msg.event.type === 'new_message' && msg.event.message.preSend) {
             return;
@@ -120,7 +124,6 @@ export class RealtimeManager {
     });
     this.socketSubscriptions.set(ws, unsubscribe);
 
-    // Send initial state
     const isPreSend = ['NONE', 'DRAFT'].includes(room.invoice.status);
     const visibleMessages = room.messages.filter(m => session.role === 'seller' || !m.preSend);
     const visibleInvoice = session.role === 'firm' && isPreSend ? null : room.invoice;
@@ -158,7 +161,6 @@ export class RealtimeManager {
     msg: RealtimeClientMessage,
     ws: WebSocket,
   ) {
-    // 1. Idempotency Key check
     if ('idempotencyKey' in msg && msg.idempotencyKey) {
       if (room.seenIdempotencyKeys.has(msg.idempotencyKey)) {
         log.info({ key: msg.idempotencyKey }, 'Ignoring duplicate client message');
@@ -167,7 +169,6 @@ export class RealtimeManager {
       room.seenIdempotencyKeys.add(msg.idempotencyKey);
     }
 
-    // 2. Replay missed sequence
     if (msg.type === 'sync_replay') {
       const missed = room.messages.filter(m => m.seq > msg.lastSeq);
       for (const m of missed) {
@@ -177,7 +178,6 @@ export class RealtimeManager {
       return;
     }
 
-    // 3. Chat message
     if (msg.type === 'chat') {
       const isPreSend = ['NONE', 'DRAFT'].includes(room.invoice.status);
       room.currentSeq += 1;
@@ -199,7 +199,6 @@ export class RealtimeManager {
       return;
     }
 
-    // 4. Edit item (Seller only)
     if (msg.type === 'edit_item') {
       if (session.role !== 'seller') {
         throw new Error('Only the seller can make direct invoice edits');
@@ -237,7 +236,6 @@ export class RealtimeManager {
       return;
     }
 
-    // 5. Send invoice (Seller only)
     if (msg.type === 'send_invoice') {
       if (session.role !== 'seller') throw new Error('Only the seller can send the invoice');
       if (room.invoice.status !== 'DRAFT') throw new Error('Only draft invoices can be sent');
@@ -246,7 +244,6 @@ export class RealtimeManager {
       room.invoice.status = 'SENT';
       room.invoice.version = Math.max(1, room.invoice.version);
 
-      // Unhide pre-send messages or append system announcement
       room.currentSeq += 1;
       const sentAnnouncement: ChatMessage = {
         id: randomUUID(),

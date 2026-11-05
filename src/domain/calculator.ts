@@ -55,3 +55,4 @@ export function calculateInvoiceTotals(invoice: Invoice): InvoiceTotals {
     totalMinor: totalMinor < 0n ? 0n : totalMinor,
   };
 }
+

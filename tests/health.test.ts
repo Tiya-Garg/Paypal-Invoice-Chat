@@ -12,3 +12,4 @@ describe('Health endpoints', () => {
     expect(res.body.timestamp).toBeDefined();
   });
 });
+

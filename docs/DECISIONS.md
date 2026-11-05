@@ -34,3 +34,4 @@ This document records architectural and technical decisions made during the evol
   - `fast-check`: Property-based testing for mathematical invariants of domain arithmetic.
   - `msw`: Network interception for mock PayPal responses in integration tests.
   - `playwright`: Multi-browser, multi-role (seller vs firm) end-to-end testing.
+

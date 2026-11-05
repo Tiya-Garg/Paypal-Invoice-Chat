@@ -92,3 +92,4 @@ export function divRoundHalfUp(numerator: bigint, denominator: bigint): bigint {
   }
   return numerator / denominator;
 }
+

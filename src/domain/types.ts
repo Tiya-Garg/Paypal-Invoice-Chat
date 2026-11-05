@@ -71,3 +71,4 @@ export interface InvoiceTotals {
   taxMinor: bigint;
   totalMinor: bigint;
 }
+

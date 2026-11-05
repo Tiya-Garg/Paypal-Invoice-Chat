@@ -88,3 +88,4 @@ export interface PayPalInvoicePayload {
   amount?: PayPalAmountSummary;
   links?: Array<{ href: string; rel: string; method: string }>;
 }
+

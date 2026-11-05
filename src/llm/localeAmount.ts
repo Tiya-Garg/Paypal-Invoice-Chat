@@ -58,3 +58,4 @@ export function parseLocaleAmount(input: string, defaultCurrency = 'USD'): Parse
 
   return { amountMinor: null, currency: detectedCurrency };
 }
+

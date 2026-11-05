@@ -60,3 +60,4 @@ export const goldenCases: GoldenCase[] = [
   { input: 'add 1000 for travel expenses', role: 'seller', expectedOpCount: 1, expectedPrimaryOp: 'add_item' },
   { input: 'add 450 for equipment rental', role: 'seller', expectedOpCount: 1, expectedPrimaryOp: 'add_item' },
 ];
+

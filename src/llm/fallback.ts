@@ -71,3 +71,4 @@ export function regexFallbackParser(text: string, defaultCurrency = 'USD'): Doma
 
   return ops;
 }
+

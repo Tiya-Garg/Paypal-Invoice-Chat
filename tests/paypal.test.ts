@@ -85,3 +85,4 @@ describe('PayPal Integration & Outbox Suite', () => {
     await expect(worker.verifyInvoiceTotal('PP-123', sampleInvoice)).rejects.toThrow('Total mismatch detected');
   });
 });
+

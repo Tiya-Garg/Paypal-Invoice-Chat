@@ -29,3 +29,4 @@ describe('Locale Amount Parser', () => {
     expect(parseLocaleAmount('12.00').amountMinor).toBe(1200n);
   });
 });
+

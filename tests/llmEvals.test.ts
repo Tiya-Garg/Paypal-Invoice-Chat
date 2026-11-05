@@ -65,3 +65,4 @@ describe('LLM Command Pipeline Golden Evaluation Suite', () => {
     expect(hasTaxOrFirmOp).toBe(false);
   });
 });
+

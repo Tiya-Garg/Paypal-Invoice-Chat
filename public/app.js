@@ -409,3 +409,4 @@ if (invoiceId) {
       <button class="btn" onclick="location.href='/?invoiceId=INV-' + Math.floor(Math.random()*9000 + 1000)">Create Invoice Thread</button>
     </div>`;
 }
+

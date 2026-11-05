@@ -1,70 +1,82 @@
 # PayPal Invoice Chat
 
-Create and negotiate invoices **inside one chat thread**. Tell an assistant who to bill and for what, review the draft, send it, and keep editing it live by tagging `@PayPal` in the conversation.
+A production-grade, collaborative real-time invoice application built on the **PayPal Invoicing v2 API** and Anthropic AI assistant.
 
-> Independent prototype. Not affiliated with or endorsed by PayPal. It uses the public PayPal Invoicing API (sandbox by default).
+> **Disclaimer**: This is an independent application built using PayPal's public developer APIs. It is not affiliated with, authorized, or sponsored by PayPal, Inc.
 
-```
-Seller:  Hey PayPal, quote 5k for material A and 8k for material B to Firm X (ap@firmx.com)
-PayPal:  Added Material A ($5,000.00). Added Material B ($8,000.00). Total $13,000.00.
-Seller:  [reviews draft] → Send from PayPal
-Firm:    @PayPal please add 2k for on-site training
-PayPal:  Sent to the seller for approval.
-Seller:  [Approve change] → invoice v2 updates live for both sides
-Seller:  @PayPal add 3k for installation service, 18% GST
-```
-
-## Features
-- **Natural-language edits.** Claude (tool use) converts chat into structured ops: add / update / remove item, tax, discount, due days, firm + email. Understands `5k`, `1.5L`, `1.5 lakh`.
-- **Real-time sync.** WebSocket rooms; both parties see changes instantly with changed rows highlighted.
-- **Approval flow.** Seller edits apply immediately. Firm requests become proposals the seller approves or declines.
-- **Versioned and audited.** Edits are atomic (all or nothing). Every change after sending bumps the version, resets approval, and is logged.
-- **Role-scoped links.** Seller and firm get separate tokenised links. The firm never sees the draft or the pre-send chat.
-- **PayPal Invoicing API v2.** Creates, sends and revises the invoice from PayPal; a webhook marks it paid. Runs in **mock mode** when no PayPal keys are set.
+---
 
 ## Architecture
-```
-Browser (seller)  ─┐                      ┌─ Anthropic API  (chat text → edit ops)
-                   ├─ WebSocket ─ Node ───┤
-Browser (firm)    ─┘     (ws)    Express   └─ PayPal Invoicing v2 (create/send/update)
-                                  │  ▲
-                                  ▼  └── POST /webhooks/paypal (INVOICE.PAID)
-                           in-memory store (swap for Postgres)
-```
-- `server.js`: domain logic (`apply`, `commit`), LLM parsing, PayPal client, rooms, WebSocket handlers
-- `public/index.html`: single-file client (invoice view, chat, role-aware actions)
 
-## Run locally
-Requires Node 20.6+.
+```
+React/Vite client ── HTTPS + WS ── Node/TS API ── Postgres (state, versions, outbox, events)
+                                       │  ├─ Anthropic API  (command → ops, tool use)
+                                       │  └─ PayPal Invoicing v2 (create/send/update/get/cancel)
+                  PayPal webhooks ─────┘      worker: outbox sync + reconciliation
+```
+
+---
+
+## Key Features
+
+1. **AI Natural Language Invoicing**: Tag `@PayPal` or say *"Hey PayPal, quote 5k for Material A and 8k for Material B to Firm X"*.
+2. **Collaborative Invoice Negotiation**: Seller and Firm converse in one shared thread attached to the invoice. Firm's `@PayPal` requests automatically create structured **proposals** for the seller to approve or decline.
+3. **No Divergence Guarantee**: All money is computed in integer minor units (cents/paise). After every sync, PayPal's remote computed total is asserted against local calculation; any mismatch halts sending and flags `sync_state=mismatch`.
+4. **PayPal-Compliant Flow**: Invoices are created as drafts, sent through PayPal, revised via GET &rarr; modify &rarr; PUT full replacement, and paid directly on PayPal via `recipient_view_url`.
+5. **Secure Realtime**: Monotonic sequence replay (`seq`), WebSockets authenticated via httpOnly session cookies, CSRF protection, and pub/sub multi-server fanout.
+
+---
+
+## Environment Variables
+
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `PORT` | HTTP & WebSocket server port | `3000` |
+| `NODE_ENV` | Environment (`development`, `test`, `production`) | `development` |
+| `DATABASE_URL` | PostgreSQL connection string | `postgresql://postgres:postgres@localhost:5432/paypal_invoice_chat` |
+| `SESSION_SECRET` | Secret key for signing sessions and magic links | *(auto-validated minimum 16 chars)* |
+| `PAYPAL_CLIENT_ID` | PayPal Sandbox REST App Client ID | `""` *(runs in simulated mock if empty)* |
+| `PAYPAL_SECRET` | PayPal Sandbox REST App Secret | `""` |
+| `PAYPAL_BASE` | PayPal API Base URL | `https://api-m.sandbox.paypal.com` |
+| `PAYPAL_WEBHOOK_ID` | Registered Webhook ID for signature verification | `""` |
+| `ANTHROPIC_API_KEY` | Anthropic API key | `""` *(runs deterministic regex fallback if empty)* |
+| `MODEL` | Anthropic model for tool-use parsing | `claude-3-7-sonnet-20250219` |
+
+---
+
+## Getting Started
+
+### 1. Install Dependencies
 ```bash
 npm install
-cp .env.example .env     # add ANTHROPIC_API_KEY
-npm start                # http://localhost:3000
 ```
-Open `/`, create a thread, then open the **firm link** in a second browser or incognito window.
 
-| Variable | Purpose |
-|---|---|
-| `ANTHROPIC_API_KEY` | Required. Parses chat commands. |
-| `MODEL` | Optional. Defaults to `claude-sonnet-4-6`. |
-| `PAYPAL_CLIENT_ID`, `PAYPAL_SECRET` | Optional. Enables real PayPal sandbox invoices. |
-| `PAYPAL_BASE` | Defaults to the sandbox URL. |
+### 2. Run Database & Migrations
+```bash
+docker compose up -d postgres
+npm run migrate:up
+```
 
-Webhook testing locally: expose the server with a tunnel and register `/webhooks/paypal` for `INVOICING.INVOICE.PAID` in the PayPal developer dashboard.
+### 3. Start Development Server
+```bash
+npm run dev
+```
 
-## Known limitations
-- In-memory storage, no real authentication (link tokens only).
-- PayPal payload field names (invoice-level discount, updating an already-sent invoice) need checking against your sandbox.
-- Webhook signature verification is a TODO.
-- LLM parsing has no fallback and no rate limiting.
+### 4. Run Test Suite
+```bash
+# Run all unit, property, and integration tests
+npm test
 
-## Roadmap
-- [ ] Postgres persistence and proper auth
-- [ ] Verify PayPal webhook signatures
-- [ ] Undo / revert to any version from history
-- [ ] Quantities, per-item tax, attachments, PDF export
-- [ ] Voice trigger ("Hey PayPal")
-- [ ] Confirm-before-apply for large or ambiguous edits
+# Run Playwright E2E collaborative test
+npx playwright test
 
-## License
-MIT
+# Run PayPal Sandbox Smoke Test (requires PayPal credentials)
+npm run smoke:sandbox
+```
+
+---
+
+## Operational Runbooks & Decisions
+- See [`docs/RUNBOOK.md`](docs/RUNBOOK.md) for dealing with stuck outbox jobs, total mismatches, and secret rotation.
+- See [`docs/DECISIONS.md`](docs/DECISIONS.md) for architectural records.
+- See [`docs/HUMAN_TODO.md`](docs/HUMAN_TODO.md) for developer dashboard setup.

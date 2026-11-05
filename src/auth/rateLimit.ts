@@ -66,3 +66,4 @@ export const llmRateLimiter = createRateLimiter({
   max: 20,
   message: 'AI assistant rate limit exceeded.',
 });
+

@@ -143,3 +143,4 @@ describe('Authentication & Authorization Suite', () => {
     expect(res.body.error).toContain('CSRF');
   });
 });
+

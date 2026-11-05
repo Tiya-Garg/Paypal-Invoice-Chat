@@ -120,3 +120,4 @@ export function verifyMagicLink(token: string): MagicLinkToken | null {
     return null;
   }
 }
+

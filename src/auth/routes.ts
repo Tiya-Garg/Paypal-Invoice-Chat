@@ -216,3 +216,4 @@ authRouter.post('/auth/invite/revoke', sessionMiddleware, requireSeller, csrfPro
 
   return res.status(200).json({ message: 'Invite revoked' });
 });
+

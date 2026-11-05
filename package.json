@@ -1,0 +1,17 @@
+{
+  "name": "paypal-invoice-chat",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.18.0"
+  },
+  "description": "Create and edit invoices live in a chat thread by tagging @PayPal",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.6"
+  },
+  "author": "Tiya Garg"
+}

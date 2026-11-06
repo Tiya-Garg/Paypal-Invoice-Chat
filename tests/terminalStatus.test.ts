@@ -15,3 +15,4 @@ describe('Terminal Status Checker', () => {
     expect(isTerminalStatus('APPROVED')).toBe(false);
   });
 });
+

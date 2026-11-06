@@ -25,3 +25,4 @@ export function formatTotalsBreakdown(
     totalFormatted: fmt(totalMinor),
   };
 }
+

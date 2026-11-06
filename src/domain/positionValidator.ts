@@ -7,3 +7,4 @@ export function validateItemPosition(pos: number): number {
   }
   return pos;
 }
+

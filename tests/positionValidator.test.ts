@@ -12,3 +12,4 @@ describe('Item Position Validator', () => {
     expect(() => validateItemPosition(1.5)).toThrow();
   });
 });
+

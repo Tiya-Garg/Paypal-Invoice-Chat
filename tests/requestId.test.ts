@@ -11,3 +11,4 @@ describe('Client Request ID Generator', () => {
     expect(id1).not.toBe(id2);
   });
 });
+

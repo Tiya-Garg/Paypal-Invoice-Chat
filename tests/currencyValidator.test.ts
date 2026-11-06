@@ -14,3 +14,4 @@ describe('Currency Code Validator', () => {
     expect(() => validateCurrencyCode('FAKE')).toThrow(MoneyArithmeticError);
   });
 });
+

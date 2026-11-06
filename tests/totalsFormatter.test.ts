@@ -17,3 +17,4 @@ describe('Totals Breakdown Formatter', () => {
     expect(res.totalFormatted).toBe('$50.00');
   });
 });
+

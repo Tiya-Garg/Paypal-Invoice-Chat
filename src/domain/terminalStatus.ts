@@ -6,3 +6,4 @@ export function isTerminalStatus(status: string): boolean {
     status.toUpperCase(),
   );
 }
+

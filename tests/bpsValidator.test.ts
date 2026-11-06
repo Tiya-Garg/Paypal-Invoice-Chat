@@ -14,3 +14,4 @@ describe('Basis Points Validator', () => {
     expect(() => validateBasisPoints(10001n)).toThrow(MoneyArithmeticError);
   });
 });
+

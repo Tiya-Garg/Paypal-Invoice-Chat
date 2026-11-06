@@ -34,3 +34,4 @@ describe('Authorized Firm Operations Update Capability', () => {
     expect(updatedInvoice.items[0]?.qtyMilli).toBe(3000n);
   });
 });
+

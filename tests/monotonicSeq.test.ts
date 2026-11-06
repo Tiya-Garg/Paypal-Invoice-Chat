@@ -15,3 +15,4 @@ describe('Realtime Monotonic Sequence Incrementation', () => {
     expect(room.currentSeq).toBe(2);
   });
 });
+

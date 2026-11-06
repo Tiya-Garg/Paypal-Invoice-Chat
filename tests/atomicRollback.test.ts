@@ -41,3 +41,4 @@ describe('Atomic Rollback Multi-Op Batches', () => {
     expect(inv.items[0]?.description).toBe('Existing Item');
   });
 });
+

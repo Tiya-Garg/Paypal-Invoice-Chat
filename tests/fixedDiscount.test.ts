@@ -35,3 +35,4 @@ describe('Invoice Fixed Amount Discount Application', () => {
     }
   });
 });
+

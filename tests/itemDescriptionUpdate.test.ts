@@ -34,3 +34,4 @@ describe('Invoice Item In-Place Description Update', () => {
     expect(updatedInvoice.items[0]?.qtyMilli).toBe(2500n);
   });
 });
+

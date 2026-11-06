@@ -19,3 +19,4 @@ describe('Invoice Numbering', () => {
     expect(() => formatInvoiceNumber(1.5)).toThrow();
   });
 });
+

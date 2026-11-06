@@ -7,3 +7,4 @@ export function formatInvoiceNumber(seqNumber: number, prefix = 'INV'): string {
   }
   return `${prefix}-${String(seqNumber).padStart(4, '0')}`;
 }
+

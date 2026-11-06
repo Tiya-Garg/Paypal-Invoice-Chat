@@ -35,3 +35,4 @@ describe('PayPal Tax and Discount Order Invariants', () => {
     expect(totals.totalMinor).toBe(8800n); // $88.00 total (never taxed on undiscounted $100)
   });
 });
+

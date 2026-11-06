@@ -15,3 +15,4 @@ describe('Metrics Endpoint', () => {
     expect(res.body.mismatchCount).toBeDefined();
   });
 });
+

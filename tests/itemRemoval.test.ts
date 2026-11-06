@@ -35,3 +35,4 @@ describe('Invoice Item Deletion', () => {
     expect(summaries[0]).toContain('Removed item "Item A"');
   });
 });
+

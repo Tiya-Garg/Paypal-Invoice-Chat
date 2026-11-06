@@ -17,3 +17,4 @@ describe('Invoice Audit Logging', () => {
     expect(inv200History.length).toBe(1);
   });
 });
+

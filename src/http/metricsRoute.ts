@@ -6,3 +6,4 @@ export const metricsRouter = Router();
 metricsRouter.get('/metrics', (_req: Request, res: Response) => {
   res.status(200).json(defaultMetrics.getSnapshot());
 });
+

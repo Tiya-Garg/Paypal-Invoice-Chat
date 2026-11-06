@@ -21,3 +21,4 @@ describe('Structured Metrics Collector', () => {
     expect(snapshot.webhookFailures).toBe(1);
   });
 });
+

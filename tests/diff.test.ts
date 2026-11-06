@@ -50,3 +50,4 @@ describe('Invoice Version Diffing', () => {
     expect(diff.discountChanged).toBe(false);
   });
 });
+

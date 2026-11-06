@@ -16,3 +16,4 @@ describe('Invoice Lifecycle Transitions', () => {
     expect(canTransition('REFUNDED', 'APPROVED')).toBe(false);
   });
 });
+

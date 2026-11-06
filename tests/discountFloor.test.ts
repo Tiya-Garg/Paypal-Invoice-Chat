@@ -31,3 +31,4 @@ describe('Invoice Fixed Amount Discount Floor', () => {
     expect(totals.totalMinor).toBe(0n); // Never negative
   });
 });
+

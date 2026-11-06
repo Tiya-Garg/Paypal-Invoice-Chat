@@ -30,3 +30,4 @@ describe('Role Boundary Protection Against Firm Billing Changes', () => {
     }).toThrow('Firm is not allowed to change invoice billing details');
   });
 });
+

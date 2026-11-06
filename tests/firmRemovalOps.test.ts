@@ -38,3 +38,4 @@ describe('Authorized Firm Operations Item Removal', () => {
     expect(updatedInvoice.items[0]?.description).toBe('Item 1');
   });
 });
+

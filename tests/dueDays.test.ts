@@ -32,3 +32,4 @@ describe('Payment Due Days Boundaries', () => {
     expect(invMin.dueDays).toBe(1); // Min floored at 1
   });
 });
+

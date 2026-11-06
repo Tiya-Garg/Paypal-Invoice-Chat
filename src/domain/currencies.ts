@@ -5,3 +5,4 @@ export type SupportedCurrency = typeof SUPPORTED_CURRENCIES[number];
 export function isSupportedCurrency(c: string): c is SupportedCurrency {
   return SUPPORTED_CURRENCIES.includes(c as SupportedCurrency);
 }
+

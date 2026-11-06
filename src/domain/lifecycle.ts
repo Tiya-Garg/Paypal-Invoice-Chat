@@ -28,3 +28,4 @@ export function canTransition(from: InvoiceStatus, to: InvoiceStatus): boolean {
       return false;
   }
 }
+

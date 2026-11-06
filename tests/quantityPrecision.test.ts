@@ -16,3 +16,4 @@ describe('3-Decimal Quantity Edge Cases', () => {
     expect(() => toQtyMilli('-1')).toThrow(MoneyArithmeticError);
   });
 });
+

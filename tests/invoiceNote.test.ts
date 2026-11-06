@@ -32,3 +32,4 @@ describe('Invoice Customer Note Updates', () => {
     expect(withoutNote.note).toBeNull();
   });
 });
+

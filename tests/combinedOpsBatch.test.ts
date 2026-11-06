@@ -38,3 +38,4 @@ describe('Invoice Multiple Edit Operations within Batch', () => {
     expect(summaries.length).toBe(3);
   });
 });
+

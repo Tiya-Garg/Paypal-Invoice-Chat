@@ -17,3 +17,4 @@ describe('Realtime Room State Isolation', () => {
     expect(roomB.currentSeq).toBe(5);
   });
 });
+

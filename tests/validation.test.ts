@@ -22,3 +22,4 @@ describe('Invoice Input Validation Schema', () => {
     expect(() => invoiceInputSchema.parse({ dueDays: 400 })).toThrow();
   });
 });
+

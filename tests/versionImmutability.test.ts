@@ -36,3 +36,4 @@ describe('Invoice Immutable Version Snapshots', () => {
     expect(v2.version).toBe(2);
   });
 });
+

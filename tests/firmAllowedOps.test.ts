@@ -36,3 +36,4 @@ describe('Authorized Firm Operations Capability', () => {
     expect(summaries[0]).toContain('Added item');
   });
 });
+

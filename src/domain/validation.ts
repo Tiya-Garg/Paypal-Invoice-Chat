@@ -9,3 +9,4 @@ export const invoiceInputSchema = z.object({
 });
 
 export type ValidatedInvoiceInput = z.infer<typeof invoiceInputSchema>;
+

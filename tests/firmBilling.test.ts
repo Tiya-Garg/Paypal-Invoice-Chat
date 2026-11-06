@@ -33,3 +33,4 @@ describe('Invoice Recipient Billing Details', () => {
     expect(updatedInvoice.firmEmail).toBe('billing@newfirm.com');
   });
 });
+

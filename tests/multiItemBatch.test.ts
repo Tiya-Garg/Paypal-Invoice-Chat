@@ -40,3 +40,4 @@ describe('Invoice Multiple Items Batch Creation', () => {
     expect(summaries.length).toBe(3);
   });
 });
+

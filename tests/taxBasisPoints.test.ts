@@ -30,3 +30,4 @@ describe('Invoice Percentage Tax Rate Precision', () => {
     expect(updatedInvoice.tax?.percentBps).toBe(825n); // 825 basis points = 8.25%
   });
 });
+

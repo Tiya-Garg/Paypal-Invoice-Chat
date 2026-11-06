@@ -31,3 +31,4 @@ describe('Privacy Data Deletion Route', () => {
     expect(res.body.status).toBe('scheduled_for_purge');
   });
 });
+

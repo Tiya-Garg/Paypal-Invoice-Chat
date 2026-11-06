@@ -10,3 +10,4 @@ describe('Invite Token SHA-256 Storage Security', () => {
     expect(rawToken).not.toBe(tokenHash);
   });
 });
+

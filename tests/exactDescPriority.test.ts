@@ -36,3 +36,4 @@ describe('Invoice Item Exact Description Priority', () => {
     expect(updatedInvoice.items[1]?.unitMinor).toBe(2000n); // Untouched
   });
 });
+

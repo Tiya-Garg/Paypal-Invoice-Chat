@@ -31,3 +31,4 @@ export class AuditLog {
 }
 
 export const defaultAuditLog = new AuditLog();
+

@@ -34,3 +34,4 @@ describe('Authorized Firm Operations Note Capability', () => {
     expect(updatedInvoice.note).toBe('Please deliver to side entrance dock B');
   });
 });
+

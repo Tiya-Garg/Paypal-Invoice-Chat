@@ -30,3 +30,4 @@ describe('Role Boundary Protection Against Firm Tax Mutating', () => {
     }).toThrow('Firm is not allowed to adjust tax');
   });
 });
+

@@ -33,3 +33,4 @@ describe('Invoice Approval Reset on Post-Sent Mutation', () => {
     expect(updatedInvoice.version).toBe(2);
   });
 });
+

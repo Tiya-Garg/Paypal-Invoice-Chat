@@ -30,3 +30,4 @@ describe('Role Boundary Protection Against Firm Due Date Mutating', () => {
     }).toThrow('Firm cannot change payment due date');
   });
 });
+

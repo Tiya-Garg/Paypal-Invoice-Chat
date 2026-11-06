@@ -14,3 +14,4 @@ describe('Currencies validation', () => {
     expect(SUPPORTED_CURRENCIES).toContain('INR');
   });
 });
+

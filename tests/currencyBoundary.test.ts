@@ -14,3 +14,4 @@ describe('INR and USD Precision Boundary Values', () => {
     expect(res.amountMinor).toBe(1n);
   });
 });
+

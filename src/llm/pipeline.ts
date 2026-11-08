@@ -102,12 +102,15 @@ export class LlmPipeline {
       const validated = zodToolOutputSchema.parse(toolUse.input);
       const filteredOps = this.enforceRoleLimits(validated.ops as DomainOp[], actorRole);
 
-      return {
-        say: validated.say,
+      const result: LlmPipelineResult = {
         ops: filteredOps,
         usedFallback: false,
         latencyMs: Date.now() - start,
       };
+      if (validated.say !== undefined) {
+        result.say = validated.say;
+      }
+      return result;
     } catch (err) {
       log.warn({ err }, 'LLM call failed or timed out; falling back to deterministic parser');
       const fallbackOps = regexFallbackParser(text, invoice.currency);

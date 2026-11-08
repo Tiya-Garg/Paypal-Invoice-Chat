@@ -26,23 +26,31 @@ export function buildPayPalInvoicePayload(invoice: Invoice): PayPalInvoicePayloa
   const dueDate = new Date(Date.now() + invoice.dueDays * 86400000).toISOString().slice(0, 10);
   const invoiceDate = new Date().toISOString().slice(0, 10);
 
-  const payload: PayPalInvoicePayload = {
-    detail: {
-      invoice_number: invoice.number,
-      invoice_date: invoiceDate,
-      currency_code,
-      note: invoice.note || undefined,
-      payment_term: {
-        term_type: 'DUE_ON_DATE_SPECIFIED',
-        due_date: dueDate,
-      },
+  const detail: PayPalInvoiceDetail = {
+    invoice_number: invoice.number,
+    invoice_date: invoiceDate,
+    currency_code,
+    payment_term: {
+      term_type: 'DUE_ON_DATE_SPECIFIED',
+      due_date: dueDate,
     },
+  };
+  if (invoice.note) {
+    detail.note = invoice.note;
+  }
+
+  const billingInfo: PayPalBillingInfo = {
+    email_address: invoice.firmEmail,
+  };
+  if (invoice.firmName) {
+    billingInfo.business_name = invoice.firmName;
+  }
+
+  const payload: PayPalInvoicePayload = {
+    detail,
     primary_recipients: [
       {
-        billing_info: {
-          business_name: invoice.firmName || undefined,
-          email_address: invoice.firmEmail,
-        },
+        billing_info: billingInfo,
       },
     ],
     items: invoice.items.map(item => {
@@ -160,11 +168,14 @@ export class PayPalClient {
     while (attempts < maxAttempts) {
       attempts += 1;
       try {
-        const res = await fetch(`${this.baseUrl}${endpoint}`, {
+        const fetchOptions: RequestInit = {
           method,
           headers,
-          body: body ? JSON.stringify(body) : undefined,
-        });
+        };
+        if (body) {
+          fetchOptions.body = JSON.stringify(body);
+        }
+        const res = await fetch(`${this.baseUrl}${endpoint}`, fetchOptions);
 
         if (res.status === 429 || res.status >= 500) {
           if (attempts < maxAttempts) {
@@ -200,11 +211,14 @@ export class PayPalClient {
   // DOC: https://developer.paypal.com/api/invoicing/v2/#invoices_create
   async createDraftInvoice(invoice: Invoice, requestId?: string): Promise<PayPalInvoicePayload> {
     const payload = buildPayPalInvoicePayload(invoice);
-    return this.request<PayPalInvoicePayload>('/v2/invoicing/invoices', {
+    const options: { method: 'GET' | 'POST' | 'PUT' | 'DELETE'; body?: unknown; requestId?: string } = {
       method: 'POST',
       body: payload,
-      requestId,
-    });
+    };
+    if (requestId) {
+      options.requestId = requestId;
+    }
+    return this.request<PayPalInvoicePayload>('/v2/invoicing/invoices', options);
   }
 
   // DOC: https://developer.paypal.com/api/invoicing/v2/#invoices_send

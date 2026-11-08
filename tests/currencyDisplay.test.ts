@@ -34,3 +34,4 @@ describe('Currency Display & Formatting Suite', () => {
     expect(formattedInr).toContain('1,500.00');
   });
 });
+

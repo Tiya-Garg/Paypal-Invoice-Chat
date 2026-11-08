@@ -30,3 +30,4 @@ export function calculateItemDiscountMinor(
   // Cap at grossMinor so discount can never exceed gross line item amount
   return discountMinor > grossMinor ? grossMinor : discountMinor;
 }
+

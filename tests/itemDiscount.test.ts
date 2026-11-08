@@ -35,3 +35,4 @@ describe('Item Discount Calculation Suite', () => {
     expect(res2).toBe(5000n);
   });
 });
+

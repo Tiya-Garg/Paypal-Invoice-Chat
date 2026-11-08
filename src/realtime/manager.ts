@@ -207,15 +207,21 @@ export class RealtimeManager {
         throw new Error('Cannot edit an invoice in closed state');
       }
 
-      const { updatedInvoice, summaries } = applyOps(room.invoice, [
-        {
-          op: 'update_item',
-          match: msg.id,
-          description: msg.description,
-          unitPrice: msg.unitPrice,
-          qty: msg.qty,
-        },
-      ]);
+      const updateOp: { op: 'update_item'; match: string; description?: string; unitPrice?: string | number; qty?: string | number } = {
+        op: 'update_item',
+        match: msg.id,
+      };
+      if (msg.description !== undefined) {
+        updateOp.description = msg.description;
+      }
+      if (msg.unitPrice !== undefined) {
+        updateOp.unitPrice = msg.unitPrice;
+      }
+      if (msg.qty !== undefined) {
+        updateOp.qty = msg.qty;
+      }
+
+      const { updatedInvoice, summaries } = applyOps(room.invoice, [updateOp]);
       room.invoice = updatedInvoice;
       room.versions.push({
         version: updatedInvoice.version,

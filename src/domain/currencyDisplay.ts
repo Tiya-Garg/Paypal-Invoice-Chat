@@ -12,6 +12,8 @@ const CURRENCY_CONFIGS: Record<Currency, CurrencyDisplayConfig> = {
   EUR: { code: 'EUR', symbol: '€', fractionDigits: 2, locale: 'de-DE' },
   GBP: { code: 'GBP', symbol: '£', fractionDigits: 2, locale: 'en-GB' },
   INR: { code: 'INR', symbol: '₹', fractionDigits: 2, locale: 'en-IN' },
+  AUD: { code: 'AUD', symbol: 'A$', fractionDigits: 2, locale: 'en-AU' },
+  CAD: { code: 'CAD', symbol: 'C$', fractionDigits: 2, locale: 'en-CA' },
 };
 
 /**

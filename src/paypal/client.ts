@@ -2,7 +2,7 @@ import { env } from '../config/env.js';
 import { childLogger } from '../config/logger.js';
 import type { Invoice } from '../domain/types.js';
 import { toPayPalDecimal, toPayPalQuantity } from '../domain/money.js';
-import type { PayPalInvoicePayload } from './types.js';
+import type { PayPalInvoicePayload, PayPalInvoiceDetail, PayPalBillingInfo } from './types.js';
 
 const log = childLogger('paypal-client');
 

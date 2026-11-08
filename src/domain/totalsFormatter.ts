@@ -18,11 +18,16 @@ export function formatTotalsBreakdown(
       currency,
     }).format(Number(minor) / 100);
 
-  return {
+  const summary: FormattedSummary = {
     subtotalFormatted: fmt(subtotalMinor),
-    discountFormatted: discountMinor > 0n ? fmt(discountMinor) : undefined,
-    taxFormatted: taxMinor > 0n ? fmt(taxMinor) : undefined,
     totalFormatted: fmt(totalMinor),
   };
+  if (discountMinor > 0n) {
+    summary.discountFormatted = fmt(discountMinor);
+  }
+  if (taxMinor > 0n) {
+    summary.taxFormatted = fmt(taxMinor);
+  }
+  return summary;
 }
 

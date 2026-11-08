@@ -1,5 +1,3 @@
-import type { Invoice } from '../domain/types.js';
-
 export interface AuditRecord {
   id: string;
   invoiceId: string;

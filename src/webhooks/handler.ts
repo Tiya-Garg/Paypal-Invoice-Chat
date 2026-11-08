@@ -2,7 +2,6 @@ import { Router, type Request, type Response } from 'express';
 import { env } from '../config/env.js';
 import { childLogger } from '../config/logger.js';
 import { mapPayPalStatus } from '../worker/outbox.js';
-import { defaultPubSub } from '../realtime/pubsub.js';
 
 const log = childLogger('webhooks');
 
@@ -92,23 +91,26 @@ export async function verifyPayPalWebhookSignature(
 /**
  * Webhook handler with raw body preservation, signature check, deduplication, and async processing.
  */
-webhookRouter.post('/webhooks/paypal', async (req: Request & { rawBody?: Buffer }, res: Response) => {
+webhookRouter.post('/webhooks/paypal', async (req: Request & { rawBody?: Buffer }, res: Response): Promise<void> => {
   const event = req.body as WebhookEventPayload;
   if (!event || !event.id || !event.event_type) {
-    return res.status(400).send('Bad Request');
+    res.status(400).send('Bad Request');
+    return;
   }
 
   // 1. Signature Verification
   const isValid = await verifyPayPalWebhookSignature(req.headers, req.rawBody || JSON.stringify(req.body));
   if (!isValid) {
     log.warn({ eventId: event.id }, 'Rejected unverified PayPal webhook');
-    return res.status(400).json({ error: 'Signature verification failed' });
+    res.status(400).json({ error: 'Signature verification failed' });
+    return;
   }
 
   // 2. Event Deduplication
   if (processedEventIds.has(event.id)) {
     log.info({ eventId: event.id }, 'Duplicate webhook event received; ignoring');
-    return res.status(200).json({ status: 'already_processed' });
+    res.status(200).json({ status: 'already_processed' });
+    return;
   }
   processedEventIds.add(event.id);
 

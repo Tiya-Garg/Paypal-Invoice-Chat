@@ -5,7 +5,6 @@ import {
   generateMagicLink,
   verifyMagicLink,
   signSession,
-  verifySession,
   generateInviteToken,
   hashToken,
   generateOtp,
@@ -16,7 +15,6 @@ import {
   csrfProtection,
   SESSION_COOKIE_NAME,
   CSRF_COOKIE_NAME,
-  CSRF_HEADER_NAME,
   type AuthenticatedRequest,
 } from '../auth/middleware.js';
 import { loginRateLimiter } from '../auth/rateLimit.js';

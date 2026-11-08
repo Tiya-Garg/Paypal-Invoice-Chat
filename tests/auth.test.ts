@@ -1,11 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import request from 'supertest';
 import { createApp } from '../src/http/app.js';
-import { authRouter, participantStore } from '../src/auth/routes.js';
+import { authRouter } from '../src/auth/routes.js';
 import {
   signSession,
   verifySession,
-  generateInviteToken,
   hashToken,
 } from '../src/auth/tokens.js';
 import { CSRF_COOKIE_NAME, CSRF_HEADER_NAME, SESSION_COOKIE_NAME } from '../src/auth/middleware.js';

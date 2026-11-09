@@ -1,0 +1,51 @@
+/* Skeleton loading shimmer styles */
+.skeleton-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-subtle, #f1f5f9) 25%,
+    var(--color-bg-hover, #e2e8f0) 50%,
+    var(--color-bg-subtle, #f1f5f9) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.skeleton-title {
+  height: 28px;
+  width: 40%;
+}
+
+.skeleton-banner {
+  height: 48px;
+  width: 100%;
+}
+
+.skeleton-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-row {
+  height: 36px;
+  width: 100%;
+}
+
+.skeleton-total {
+  height: 32px;
+  width: 30%;
+  align-self: flex-end;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

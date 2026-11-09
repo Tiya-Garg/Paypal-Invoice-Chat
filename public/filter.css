@@ -1,0 +1,29 @@
+/* Filter and search bar styling */
+.item-filter-wrapper {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.item-filter-input {
+  width: 100%;
+  padding: 6px 10px 6px 28px;
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--color-border, #cbd5e1);
+  background: var(--color-bg-surface, #ffffff);
+  color: var(--color-text-main, #0f172a);
+  font-size: 13px;
+  outline: none;
+}
+
+.item-filter-input:focus {
+  border-color: var(--color-primary, #0070ba);
+}
+
+.item-filter-icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-subtle, #94a3b8);
+  pointer-events: none;
+}

@@ -1,0 +1,45 @@
+/* Mention autocomplete suggestions popup */
+.mention-popup {
+  position: absolute;
+  bottom: 100%;
+  left: 16px;
+  right: 16px;
+  background: var(--color-bg-surface, #ffffff);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.15));
+  margin-bottom: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 50;
+}
+
+.mention-popup-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-border-subtle, #f1f5f9);
+}
+
+.mention-popup-item:last-child {
+  border-bottom: none;
+}
+
+.mention-popup-item:hover,
+.mention-popup-item.is-active {
+  background: var(--color-bg-subtle, #f8fafc);
+}
+
+.mention-popup-label {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary, #0070ba);
+}
+
+.mention-popup-desc {
+  font-size: 12px;
+  color: var(--color-text-muted, #64748b);
+}

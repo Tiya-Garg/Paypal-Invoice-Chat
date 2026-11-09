@@ -1,0 +1,86 @@
+/* Shortcuts Help Modal Styling */
+.shortcut-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 150ms ease;
+}
+
+.shortcut-modal {
+  background: var(--color-bg-surface, #ffffff);
+  color: var(--color-text-main, #0f172a);
+  border-radius: var(--radius-lg, 12px);
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-lg, 0 20px 25px -5px rgba(0, 0, 0, 0.2));
+  border: 1px solid var(--color-border, #e2e8f0);
+  overflow: hidden;
+}
+
+.shortcut-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+}
+
+.shortcut-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.shortcut-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.shortcut-desc {
+  color: var(--color-text-muted, #64748b);
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-text-main, #0f172a);
+  background: var(--color-bg-subtle, #f1f5f9);
+  border: 1px solid var(--color-border, #cbd5e1);
+  border-radius: var(--radius-sm, 4px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.shortcut-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--color-text-muted, #64748b);
+  cursor: pointer;
+}
+
+.shortcut-close-btn:hover {
+  color: var(--color-text-main, #0f172a);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

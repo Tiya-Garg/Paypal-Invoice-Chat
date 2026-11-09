@@ -2,11 +2,11 @@
  * Lightweight safe markdown renderer for chat messages:
  * Supports **bold**, *italics*, `code`, @PayPal mentions, and line breaks without unsafe HTML injection.
  */
-export function renderChatMarkdown(raw: string): string {
+export function renderChatMarkdown(raw) {
   if (!raw) return '';
 
   // 1. First escape raw HTML entities
-  let text = raw
+  let text = String(raw)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')

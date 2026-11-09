@@ -1,0 +1,64 @@
+/* Voice recording audio wave animation styles */
+.voice-visualizer-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-danger-bg, #fef2f2);
+  border: 1px solid var(--color-danger, #ef4444);
+  padding: 8px 14px;
+  border-radius: var(--radius-md, 8px);
+  margin-bottom: 8px;
+  animation: fadeIn 200ms ease;
+}
+
+.voice-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+}
+
+.voice-wave .bar {
+  width: 3px;
+  background: var(--color-danger, #ef4444);
+  border-radius: 2px;
+  animation: wavePulse 1s ease-in-out infinite;
+}
+
+.voice-wave .bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.voice-wave .bar:nth-child(2) { height: 16px; animation-delay: 0.2s; }
+.voice-wave .bar:nth-child(3) { height: 12px; animation-delay: 0.3s; }
+.voice-wave .bar:nth-child(4) { height: 6px; animation-delay: 0.4s; }
+
+@keyframes wavePulse {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+.voice-duration {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-danger, #ef4444);
+}
+
+.voice-hint {
+  font-size: 13px;
+  color: var(--color-text-muted, #64748b);
+  flex: 1;
+}
+
+.voice-stop-btn {
+  background: var(--color-danger, #ef4444);
+  color: white;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+}
+
+.voice-stop-btn:hover {
+  background: #dc2626;
+}

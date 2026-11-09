@@ -1,0 +1,49 @@
+/* Print and PDF Export Stylesheet */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt !important;
+  }
+
+  /* Hide interactive chat, headers, controls, and banners */
+  header,
+  .chat-panel,
+  .toast-container,
+  .shortcut-modal-backdrop,
+  .item-reorder-controls,
+  .btn-primary,
+  .btn-secondary,
+  .proposal-actions,
+  #aria-announcer {
+    display: none !important;
+  }
+
+  main {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .invoice-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .invoice-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  .invoice-table th,
+  .invoice-table td {
+    border-bottom: 1px solid #ddd !important;
+    padding: 8px 4px !important;
+  }
+
+  .invoice-totals {
+    page-break-inside: avoid;
+  }
+}

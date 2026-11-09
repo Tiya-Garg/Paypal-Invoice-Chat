@@ -7,7 +7,8 @@ describe('renderChatMarkdown unit suite', () => {
     const rendered = renderChatMarkdown(malicious);
     expect(rendered).not.toContain('<script>');
     expect(rendered).toContain('&lt;script&gt;');
-    expect(rendered).not.toContain('onerror=');
+    expect(rendered).toContain('&lt;img');
+    expect(rendered).not.toContain('<img');
   });
 
   it('renders bold and italic formatting', () => {

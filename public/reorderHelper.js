@@ -2,7 +2,8 @@
  * Item Reordering & Position Helper:
  * Supports moving invoice items up and down cleanly with keyboard or touch controls.
  */
-export function moveItemInArray<T>(items: T[], index: number, direction: 'up' | 'down'): T[] {
+export function moveItemInArray(items, index, direction) {
+  if (!Array.isArray(items)) return [];
   if (direction === 'up' && index <= 0) return items;
   if (direction === 'down' && index >= items.length - 1) return items;
 

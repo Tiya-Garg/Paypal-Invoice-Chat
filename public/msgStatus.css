@@ -1,0 +1,24 @@
+/* Optimistic message status indicator styles */
+.msg-status-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  font-size: 11px;
+}
+
+.msg-status-pending {
+  color: var(--color-text-subtle, #94a3b8);
+}
+
+.msg-status-sent {
+  color: var(--color-primary, #0070ba);
+}
+
+.msg-status-failed {
+  color: var(--color-danger, #ef4444);
+  cursor: pointer;
+}
+
+.msg-bubble.is-pending {
+  opacity: 0.75;
+}

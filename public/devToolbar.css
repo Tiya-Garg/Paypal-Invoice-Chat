@@ -1,0 +1,44 @@
+/* Dev Role Toolbar styling */
+.dev-role-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-subtle, #0f172a);
+  color: #f8fafc;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.dev-role-title {
+  opacity: 0.7;
+}
+
+.dev-role-btn {
+  color: #94a3b8;
+  text-decoration: none;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.dev-role-btn.is-active {
+  background: var(--color-primary, #0070ba);
+  color: white;
+}
+
+.dev-role-copy-invite {
+  margin-left: 6px;
+  background: transparent;
+  border: 1px solid #475569;
+  color: #f8fafc;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.dev-role-copy-invite:hover {
+  background: #334155;
+}
